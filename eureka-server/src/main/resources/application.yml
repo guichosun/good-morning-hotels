@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: eureka-server
+---
+# This default profile is used when running a single instance completely standalone:
+# Esta propiedad es valida cuando el archivo se llama bootstrap.yml
+#spring:
+#  profiles: default
+server:
+  port: 8761 # Este port es el que usa eureka por default
+
+# Por defecto eureka-server levanta como server y como client tambièn
+eureka:
+  client:
+    registerWithEureka: false # Se desactiva el auto-descubriento como cliente este proyecto
+    fetchRegistry: false
+  instance:
+    hostname: default-eureka-server.com
+#    serviceUrl:
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#
+#---
+#spring:
+#  profiles: peer-1
+#  application:
+#    name: eureka-server-clustered
+#server:
+#  port: 9001
+#eureka:
+#  instance:
+#    hostname: peer-1-server.com
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://peer-2-server.com:9002/eureka/,http://peer-3-server.com:9003/eureka/
+#
+#---
+#spring:
+#  profiles: peer-2
+#  application:
+#    name: eureka-server-clustered
+#server:
+#  port: 9002
+#eureka:
+#  instance:
+#    hostname: peer-2-server.com
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://peer-1-server.com:9001/eureka/,http://peer-3-server.com:9003/eureka/
+#
+#---
+#spring:
+#  profiles: peer-3
+#  application:
+#    name: eureka-server-clustered
+#server:
+#  port: 9003
+#eureka:
+#  instance:
+#    hostname: peer-3-server.com
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://peer-1-server.com:9001/eureka/,http://peer-2-server.com:9002/eureka/
