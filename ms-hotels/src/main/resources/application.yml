@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: ms-hotel
+# El profile activo en este micro
+  profiles:
+    active: dev
+#active=qa
+#active=perf
+#active=prod
+
+  data:
+    mongodb:
+      host: http://monguito:27017
+      port: 27017
+      database: gmh
+
+# Con esto le decimos a spring que genere de manera automatica el port
+server:
+  port: ${PORT:0}
+# Sin API Gateway
+#server.port=8005
+# El puerto es 8080 por que ya esta dockerizado
+#server.port=8080
+
+# ......... Configuracion para Eureka server
+# Se configura el id de la instancia en eureka, esto porque estamos dejando el num del port que lo haga spring
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+# Se indica la url del servidor de eureka, esto para cuando el servidor esta en otra ruta
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+# Se indica la url del servidor de eureka, esto para cuando el servidor esta en docker
+#defaultZone=http://eureka-server:8761/eureka
+
+api:
+  base:
+    hoteles: /api/hotels
+
