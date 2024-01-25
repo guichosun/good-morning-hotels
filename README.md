@@ -7,7 +7,22 @@ This is the MSA's main project.
 
 ### * MongoDB on docker
 
+I need to pull __mongo:6.0__ image
 
+`docker pull mongo:6.0`
+
+I need to create a container based on mongo image called **monguis**:
+
+`docker create -p27017:27017 --name monguis --network gmh-network -v /Users/guichosun/data:/data/db -e MONGO_INITDB_ROOT_USERNAME=gmh -e MONGO_INITDB_ROOT_PASSWORD=gmh_db12 mongo:6.0`
+
+to run a container, use the run command. Its more easy. If doesn't exist the image, then it pulls the image, also, create a container.
+
+`docker run -d -p27017:27017 --name monguis --network gmh-network -v /Users/guichosun/data:/data/db -e MONGO_INITDB_ROOT_USERNAME=gmh-db -e MONGO_INITDB_ROOT_PASSWORD=gmh_db12 mongo:6.0`
+
+This Command will give you a bash shell inside your **monguis** container: 
+`docker exec -it monguis bash`
+
+To enter the container logs `docker logs --follow monguis`
 
 ### * Postgres on docker
 
