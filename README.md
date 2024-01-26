@@ -42,8 +42,11 @@ To re-start the **postgres-server-container**
 
 Es el ancargado del registro y descubrimiento en la AMS. Este componwnte se tiene que ejecutar primero.
 
+### * API Gateway
 
-Se divide en estos diferentes microservicios.f
+This is an implemented of the APIGateway pattern. Spring Cloud Gateway aims to provide a simple, yet effective way to route to APIs and provide cross cutting concerns to them such as: security, monitoring/metrics, and resiliency.
+
+Se divide en estos diferentes microservicios.
 
 ### * Hoteles
 
