@@ -1,0 +1,3 @@
+# El port por defecto de un gateway.
+server:
+  port: 8090
