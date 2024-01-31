@@ -24,6 +24,11 @@ This Command will give you a bash shell inside your **monguis** container:
 
 To enter the container logs `docker logs --follow monguis`
 
+To re-start the **monguis**
+
+`docker start --interactive monguis`
+
+---
 ### * Postgres on docker
 
 I need to pull postgres image
@@ -38,21 +43,33 @@ To re-start the **postgres-server-container**
 
 `docker start --interactive postgres-server-container`
 
+---
 ### * Eureka server 
 
 Es el ancargado del registro y descubrimiento en la AMS. Este componwnte se tiene que ejecutar primero.
 
+---
 ### * API Gateway
 
 This is an implemented of the APIGateway pattern. Spring Cloud Gateway aims to provide a simple, yet effective way to route to APIs and provide cross cutting concerns to them such as: security, monitoring/metrics, and resiliency.
 
-Se divide en estos diferentes microservicios.
+Spring Cloud Gateway provides a powerful way to handle HTTP traffic between microservices. It also provides several mechanisms for securing the gateway, including JWT.
 
+---
+There are several important microservices.
+
+---
 ### * Hoteles
 
+---
 ### * Habitaciones
 
+---
 ### * Reservas
 
+---
 ### * Huéspedes
 
+Service to manage all request for Guest features. 
+
+It implements `spring-boot-starter-security` 

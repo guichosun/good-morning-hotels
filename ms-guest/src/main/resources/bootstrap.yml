@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: ms-guests
+  # El profile activo en este micro
+  profiles:
+    active: dev
+  #active=qa
+  #active=perf
+  #active=prod
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: gmh
+      password: gmh_db12
+      database: gmh
+
+# Con esto le decimos a spring que genere de manera automatica el port
+server:
+  port: ${PORT:0}
+# Sin API Gateway
+#server.port=8005
+# El puerto es 8080 por que ya esta dockerizado
+#server.port=8080

@@ -18,7 +18,8 @@
 		<module>api-gateway</module>
 		<module>ms-hotels</module>
 		<module>ms-rooms</module>
-	</modules>
+        <module>ms-guest</module>
+    </modules>
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
