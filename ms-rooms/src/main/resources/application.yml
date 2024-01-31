@@ -1,0 +1,24 @@
+# ......... Configuracion para Eureka server
+# Se configura el id de la instancia en eureka, esto porque estamos dejando el num del port que lo haga spring
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+# Se indica la url del servidor de eureka, esto para cuando el servidor esta en otra ruta
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+# Se indica la url del servidor de eureka, esto para cuando el servidor esta en docker
+      #defaultZone=http://eureka-server:8761/eureka
+
+# Para activar actuator y permitira actualizar todos los components anotados con RefreshScope,
+# /actuator/refresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+api:
+  base:
+    rooms: /rooms
