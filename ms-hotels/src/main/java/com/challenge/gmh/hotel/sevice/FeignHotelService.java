@@ -1,16 +1,19 @@
 package com.challenge.gmh.hotel.sevice;
 
 import com.challenge.gmh.hotel.client.RoomsFeignClient;
+import com.challenge.gmh.hotel.model.HotelRequest;
+import com.challenge.gmh.hotel.model.RoomRequest;
 import com.challenge.gmh.hotel.model.entity.Hotel;
 import com.challenge.gmh.hotel.repository.HotelRepository;
-import com.challenge.gmh.hotel.sevice.HotelService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -24,11 +27,11 @@ public class FeignHotelService implements HotelService {
     private final HotelRepository hotelRepository;
 
     @Override
-    public Optional<Hotel> create(Hotel hotel) {
+    public Optional<Hotel> create(HotelRequest hotel) {
         log.info("El hotel  a guardar {}",hotel);
 
         // Check  if doesn't exist by name
-        List<Hotel> hotels = hotelRepository.findByNameAndStars(hotel.getName(), hotel.getStars());
+        List<Hotel> hotels = hotelRepository.findByNameAndStars(hotel.getHotelName(), hotel.getStars());
         log.info("Hoteles existendes {}",hotels.size());
 
         if(!hotels.isEmpty()) {
@@ -36,7 +39,23 @@ public class FeignHotelService implements HotelService {
             return Optional.empty();
         }
 
-        Hotel hotelSaved = hotelRepository.save(hotel);
+        // TODO Antes de guardar el hotel, primero hay que guardar los rooms. Si es que trae
+        Optional<List<RoomRequest>> optionalRooms = Optional.ofNullable(hotel.getRooms());
+
+        List<Integer> roomsids = List.of();
+        if(optionalRooms.isPresent()) {
+            roomsids = optionalRooms.get().stream()
+                    .map(m -> m.getRoomNo())
+                    .collect(Collectors.toList());
+        }
+        // Mapping
+        Hotel hotelToSave = Hotel.builder().description(hotel.getDescription())
+                .name(hotel.getHotelName())
+                .stars(hotel.getStars())
+                .rooms(roomsids)
+                .build();
+
+        Hotel hotelSaved = hotelRepository.save(hotelToSave);
 
         log.info("el hotelSaved.id {}",hotelSaved.getId());
         return Optional.of(hotelSaved);
@@ -48,7 +67,7 @@ public class FeignHotelService implements HotelService {
         log.info(String.format("El id %s",id));
         Hotel hotel = hotelRepository.findById(id).orElseThrow(RuntimeException::new);
         log.info("El hotel encontrado {}",hotel);
-        hotel.setRooms(feignClient.getRoomsByHotel(hotel.getId()));
+        //hotel.setRooms(feignClient.getRoomsByHotel(hotel.getId()));
         return Optional.of(hotel);
     }
 

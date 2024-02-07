@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * Esta class represent the request data.
@@ -24,4 +25,6 @@ public class HotelRequest {
 
     @NotBlank
     private Integer stars;
+
+    private List<RoomRequest> rooms;
 }

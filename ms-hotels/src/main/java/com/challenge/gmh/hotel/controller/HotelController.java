@@ -1,18 +1,17 @@
 package com.challenge.gmh.hotel.controller;
 
+import com.challenge.gmh.hotel.model.HotelRequest;
 import com.challenge.gmh.hotel.model.entity.Hotel;
 import com.challenge.gmh.hotel.sevice.HotelService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,12 +74,22 @@ public class HotelController {
     }
 
     /**
-     * Para actualizar el Hotel.
+     * Save an Hotel.
      * @param hotel
      * @return
      */
     @PostMapping()
-    public ResponseEntity<Hotel> post(@RequestBody Hotel hotel) {
+    public ResponseEntity<Hotel> post(@RequestHeader("Accept-Encoding") String encoding,
+                                      @RequestHeader("Host") String host,
+                                      @RequestHeader Map<String, String> allHeaders,
+                                      @RequestHeader HttpHeaders allHeaders2,
+                                      @RequestBody HotelRequest hotel) {
+
+        allHeaders.forEach((key, value) -> {
+            log.info(String.format("Header '%s' = %s", key, value));
+        });
+        log.info(String.format("Post en el puerto '%s' ",env.getProperty("local.server.port")));
+        log.info(String.format("El hotel %s para guardar' ",hotel));
 
         Hotel hotelSaved = hotelService.create(hotel).orElseThrow(RuntimeException::new);
 

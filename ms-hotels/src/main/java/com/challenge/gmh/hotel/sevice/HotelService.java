@@ -1,5 +1,6 @@
 package com.challenge.gmh.hotel.sevice;
 
+import com.challenge.gmh.hotel.model.HotelRequest;
 import com.challenge.gmh.hotel.model.entity.Hotel;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Optional;
  *
  */
 public interface HotelService {
-    Optional<Hotel> create(Hotel hotel);
+    Optional<Hotel> create(HotelRequest hotel);
 
     /**
      * Recupera el hotel + todos sus rooms

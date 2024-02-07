@@ -13,7 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.List;
 
 /**
- * Esta class represent a Collection
+ * Represents a hotels collection.
+ *
+ * @author guichosun.
  */
 @Document(collection = "hotels")
 @Getter
@@ -36,6 +38,6 @@ public class Hotel {
     @Transient
     private Integer port;
 
-    @Transient
-    private List<RoomResponse> rooms;
+    @Field
+    private List<Integer> rooms;
 }
