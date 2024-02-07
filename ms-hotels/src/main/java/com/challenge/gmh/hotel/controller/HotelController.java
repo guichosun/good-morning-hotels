@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -30,7 +32,7 @@ public class HotelController {
 
     private final HotelService hotelService;
 
-    private final CircuitBreakerFactory cbFactory;
+    //private final CircuitBreakerFactory cbFactory;
 
     /* Para inyectar el bean que tiene los profiles activos */
     private final Environment env;
@@ -40,13 +42,20 @@ public class HotelController {
      */
     @GetMapping()
     public ResponseEntity<List<Hotel>> getHotels() {
-        log.info("Recuperar todos los hoteles");
+        log.info("Recuperar todos los hoteles en el puerto "+env.getProperty("local.server.port"));
 
         /*
         TODO Hacer para regresar todos los hoteles
          */
+        Optional<List<Hotel>> optionalHotels = Optional.ofNullable(hotelService.retrieleAll());
 
-        return ResponseEntity.noContent().build();
+        optionalHotels.ifPresent(lst -> lst.stream()
+                .map(hotel -> {
+                    hotel.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+                    return hotel;
+                }).collect(Collectors.toList()));
+
+        return ResponseEntity.of(optionalHotels);
     }
 
     /**
@@ -59,8 +68,8 @@ public class HotelController {
         /*
         Una implementacion programaticamente del CB
          */
-        Hotel hotel =  cbFactory.create("hotelWithRooms").run(() -> hotelService.retrieveById(id)
-                .orElseThrow(RuntimeException::new));
+        Hotel hotel = null; /*cbFactory.create("hotelWithRooms").run(() -> hotelService.retrieveById(id)
+                .orElseThrow(RuntimeException::new));*/
 
         return ResponseEntity.ok(hotel);
     }
@@ -110,5 +119,4 @@ public class HotelController {
 
         return ResponseEntity.noContent().build();
     }
-
 }

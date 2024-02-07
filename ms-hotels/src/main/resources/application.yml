@@ -1,3 +1,21 @@
+spring:
+  application:
+    name: hotels-microservice
+  # El profile activo en este micro
+  profiles:
+    active: dev
+  #active=qa
+  #active=perf
+  #active=prod
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: mongoadmin
+      password: adminadmin123
+      database: gmhdb
+      authentication-database: admin
+
 # ......... Configuracion para Eureka server
 # Se configura el id de la instancia en eureka, esto porque estamos dejando el num del port que lo haga spring
 eureka:
@@ -18,8 +36,3 @@ management:
     web:
       exposure:
         include: "*"
-
-api:
-  base:
-    hoteles: /api/hotels
-

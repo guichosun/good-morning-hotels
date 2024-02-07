@@ -31,7 +31,7 @@ public class FeignHotelService implements HotelService {
         List<Hotel> hotels = hotelRepository.findByNameAndStars(hotel.getName(), hotel.getStars());
         log.info("Hoteles existendes {}",hotels.size());
 
-        if(hotels.isEmpty()) {
+        if(!hotels.isEmpty()) {
             log.info("Ya existe un hotel con ese nombre y stars");
             return Optional.empty();
         }

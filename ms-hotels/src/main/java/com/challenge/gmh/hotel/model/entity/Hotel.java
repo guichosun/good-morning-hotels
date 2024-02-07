@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Esta class represent a Collection
  */
-@Document(collection = "hoteles")
+@Document(collection = "hotels")
 @Getter
 @Setter
 @Builder
@@ -32,6 +32,9 @@ public class Hotel {
     private String description;
 
     private Integer stars;
+
+    @Transient
+    private Integer port;
 
     @Transient
     private List<RoomResponse> rooms;
