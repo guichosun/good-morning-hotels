@@ -1,15 +1,24 @@
+# Se hace un LB con Eureka integration (+complex, dynamic)
 spring:
-  application: 
-    name: gateway-server
   cloud:
     loadbalancer:
       configurations: health-check
-    gateway: # Declaracion de los paths mediante SC API Gateway
-      routes:
-        - id: hotel-service
-          uri: lb://hotel-service # lb es por Load Balancer
+#    discovery:
+#      enabled: true
+    gateway:
+#      httpclient:
+#        wiretap: true
+      routes: # Declaracion de los paths mediante SC API Gateway
+        - id: hotels-microservice
+          uri: lb://hotels-microservice # lb es por Load Balancer
           predicates:
             - Path=/api/hotels/**
+          filters:
+            - StripPrefix=2
+        - id: ms-guest
+          uri: lb://ms-guest # lb es por Load Balancer
+          predicates:
+            - Path=/api/guest/**
           filters:
             - StripPrefix=2
         # Add a simple re-route from: /get to: http://httpbin.org:80
@@ -24,23 +33,10 @@ spring:
         - id: rooms-service
           uri: lb://rooms-service
           predicates:
-            - Path=/api/rooms/**
+            - Path=/api/rooms/** # Declaracion de los paths mediante SC API Gateway
 #          filters:
 #            - StripPrefix=2
 #            - AddRequestHeader=token-request, 123456
 #            - AddResponseHeader=token-response, 12345678
 #            - SetResponseHeader=Content-Type, text/plain
 #            - AddRequestParameter=nombre, andres
-
-# Se indica la url del servidor de eureka, esto para cuando el servidor esta en otra ruta
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
-    # lb mediante eureka
-    webclient:
-      enabled: true
-    fetchRegistry: true
-    registerWithEureka: false
-  instance:
-    preferIpAddress: true
