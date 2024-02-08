@@ -35,9 +35,6 @@ public class Hotel {
 
     private Integer stars;
 
-    @Transient
-    private Integer port;
-
     @Field
     private List<Integer> rooms;
 }

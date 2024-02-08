@@ -46,11 +46,11 @@ public class HotelController {
         /*
         TODO Hacer para regresar todos los hoteles
          */
-        Optional<List<Hotel>> optionalHotels = Optional.ofNullable(hotelService.retrieleAll());
+        Optional<List<Hotel>> optionalHotels = hotelService.retrieveAll();
 
         optionalHotels.ifPresent(lst -> lst.stream()
                 .map(hotel -> {
-                    hotel.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+                    //hotel.setPort(Integer.parseInt(env.getProperty("local.server.port")));
                     return hotel;
                 }).collect(Collectors.toList()));
 
