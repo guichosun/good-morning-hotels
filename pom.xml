@@ -19,6 +19,7 @@
 		<module>ms-hotels</module>
 		<module>ms-rooms</module>
         <module>ms-guest</module>
+        <module>auth-service</module>
     </modules>
 	<properties>
 		<java.version>11</java.version>
