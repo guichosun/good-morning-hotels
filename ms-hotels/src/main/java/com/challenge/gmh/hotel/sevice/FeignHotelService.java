@@ -7,7 +7,6 @@ import com.challenge.gmh.hotel.model.entity.Hotel;
 import com.challenge.gmh.hotel.repository.HotelRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.util.Lists;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +60,17 @@ public class FeignHotelService implements HotelService {
         return Optional.of(hotelSaved);
     }
 
+    /**
+     * @see HotelService#retrieveAll()
+     */
+    @Override
+    public Optional<List<Hotel>> retrieveAll() {
+        log.info("va a recuperar todos los hoteles");
+        Optional<List<Hotel>> opt = Optional.ofNullable(hotelRepository.findAll());
+        opt.ifPresent(lst -> log.info("Hoteles encontrados {}",lst.size()));
+        return opt;
+    }
+
     @Override
     public Optional<Hotel> retrieveById(String id) {
 
@@ -71,10 +81,6 @@ public class FeignHotelService implements HotelService {
         return Optional.of(hotel);
     }
 
-    @Override
-    public List<Hotel> retrieleAll() {
-        return null;
-    }
 
     @Override
     public void delHoel(Hotel hotel) {

@@ -1,13 +1,30 @@
-spring:
-  application:
-    name: eureka-server
----
 # This default profile is used when running a single instance completely standalone:
 # Esta propiedad es valida cuando el archivo se llama bootstrap.yml
 #spring:
 #  profiles: default
 server:
   port: 8761 # Este port es el que usa eureka por default
+
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: admin
+      password: pwd
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
 
 # Por defecto eureka-server levanta como server y como client tambièn
 eureka:
