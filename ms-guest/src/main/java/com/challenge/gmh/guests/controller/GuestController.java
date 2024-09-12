@@ -4,6 +4,7 @@ import com.challenge.gmh.guests.model.entity.Guest;
 import com.challenge.gmh.guests.service.GuestService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,8 @@ public class GuestController {
 
     //private final GuestService service;
 
+    private final Environment env;
+
     @GetMapping("/{email}")
     public ResponseEntity<Guest> getGuests(@PathVariable String email) {
         log.info("Recuperar todos los guest registrados");
@@ -31,14 +34,14 @@ public class GuestController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Guest>> getGuests() {
+    public ResponseEntity<String> getGuests() {
         log.info("Recuperar todos los guest registrados");
 
         /*
         TODO Hacer para regresar todos los guest
          */
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Hola desde el puerto: "+env.getProperty("local.server.port"));
     }
 
     @PostMapping

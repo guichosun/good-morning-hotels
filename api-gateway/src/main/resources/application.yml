@@ -14,13 +14,19 @@ spring:
           predicates:
             - Path=/api/hotels/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=2 # Este filtro es necesario por que se tiene dividido en dos paths en el Path
         - id: ms-guest
           uri: lb://ms-guest # lb es por Load Balancer
           predicates:
             - Path=/api/guest/**
           filters:
             - StripPrefix=2
+        - id: auth-server
+          predicates:
+            - Path=/api/login/
+          uri: lb://auth-server
+          filters:
+            - StringPrefix=2
         # Add a simple re-route from: /get to: http://httpbin.org:80
         - id: add_request_header_route
           uri: http://httpbin.org:80 # forward to httpbin
@@ -40,3 +46,4 @@ spring:
 #            - AddResponseHeader=token-response, 12345678
 #            - SetResponseHeader=Content-Type, text/plain
 #            - AddRequestParameter=nombre, andres
+

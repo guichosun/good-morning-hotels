@@ -43,11 +43,11 @@ public class HotelController {
     public ResponseEntity<List<Hotel>> getHotels() {
         log.info("Recuperar todos los hoteles en el puerto "+env.getProperty("local.server.port"));
 
-        /*
-        TODO Hacer para regresar todos los hoteles
-         */
         Optional<List<Hotel>> optionalHotels = hotelService.retrieveAll();
 
+        /*
+        TODO Cambiar el tipo a HotelResponse
+         */
         optionalHotels.ifPresent(lst -> lst.stream()
                 .map(hotel -> {
                     //hotel.setPort(Integer.parseInt(env.getProperty("local.server.port")));

@@ -15,7 +15,11 @@ I need to pull __mongo:6.0__ image
 
 I need to create a container based on mongo image called **monguis**:
 
-`docker create -p27017:27017 --name monguis --network gmh-network -v /Users/guichosun/data:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=adminadmin123 -e MONGO_INITDB_DATABASE=testdb mongo:6.0`
+`docker create -p27017:27017 --name monguis --network gmh-network \
+-v /Users/guichosun/data:/data/db \
+-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+-e MONGO_INITDB_ROOT_PASSWORD=adminadmin123 \
+-e MONGO_INITDB_DATABASE=gmhdb mongo:6.0`
 
 to run a container, use the run command. Its more easy. If doesn't exist the image, then it pulls the image, also, create a container.
 
@@ -29,6 +33,23 @@ To enter the container logs `docker logs --follow monguis`
 To re-start the **monguis**
 
 `docker start --interactive monguis`
+
+~~~
+docker run -d -p27017:27017 --name monguis --network gmh-network \
+-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+-e MONGO_INITDB_ROOT_PASSWORD=adminadmin123 \
+-e MONGO_INITDB_DATABASE=gmhdb \
+-v /Users/guichosun/data:/data/db mongo:6.0
+
+docker run -it --rm --name monguis --network gmh-network mongo:6.0 \
+mongosh --host monguis \
+-u mongoadmin \
+-p adminadmin123 \
+--authenticationDatabase admin \
+gmhdb
+
+docker exec -it monguis /bin/bash
+~~~
 
 ---
 ### * Postgres on docker
@@ -48,6 +69,8 @@ To re-start the **postgres-server-container**
 ---
 ### * Eureka server 
 
+Also called server registry.
+
 Es el ancargado del registro y descubrimiento en la AMS. Este componwnte se tiene que ejecutar primero.
 
 ---
@@ -57,10 +80,13 @@ This is an implemented of the APIGateway pattern. Spring Cloud Gateway aims to p
 
 Spring Cloud Gateway provides a powerful way to handle HTTP traffic between microservices. It also provides several mechanisms for securing the gateway, including JWT.
 
+There are some benefits: 
+* ***Security*** — Authentication, authorization.
+* ***Routing*** — routing, request/response manipulation, circuit breaker.
+* ***Observability*** — metric aggregation, logging, tracing
 ---
 There are several important microservices.
 
----
 ### * Hoteles
 
 ---
@@ -74,4 +100,8 @@ There are several important microservices.
 
 Service to manage all request for Guest features. 
 
-It implements `spring-boot-starter-security` 
+It implements `spring-boot-starter-security`
+
+---
+### * Auth Service
+Servs to handle autherization and authentication to hole application.
